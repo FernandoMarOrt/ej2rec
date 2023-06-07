@@ -44,26 +44,37 @@ public class FichaDomino {
         hash = 97 * hash + this.numero2;
         return hash;
     }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) {
+//            return true;
+//        }
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (getClass() != obj.getClass()) {
+//            return false;
+//        }
+//        final FichaDomino other = (FichaDomino) obj;
+//        if (this.numero1 != other.numero1) {
+//            return false;
+//        }
+//        return this.numero2 == other.numero2;
+//    }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final FichaDomino other = (FichaDomino) obj;
-        if (this.numero1 != other.numero1) {
-            return false;
-        }
-        return this.numero2 == other.numero2;
+        FichaDomino other = (FichaDomino) obj;
+        return (numero1 == other.numero1 && numero2 == other.numero2)
+                || (numero1 == other.numero2 && numero2 == other.numero1); // Considerar fichas simétricas como iguales
     }
-
-  
 
  
 

@@ -26,57 +26,91 @@ public class GestionFichero {
 
     }
 
+//    public static List<FichaDomino> generarListaFichero(String nomFichero, String separador) {
+//        List<FichaDomino> listaFicha = new ArrayList<>();
+//        List<FichaDomino> listaFicha2 = new ArrayList<>();
+//
+//        String idFichero = nomFichero;
+//        String[] tokens;
+//        String linea = "";
+//
+//        FichaDomino f = null;
+//
+//        try ( Scanner datosFichero = new Scanner(new File(idFichero), "UTF-8")) {
+//            while (datosFichero.hasNextLine()) {
+//
+//                linea = datosFichero.nextLine(); // Guarda la línea completa en un String
+//
+//                linea = linea.replaceAll(" ", "");
+//
+//                if (!linea.isEmpty()) { // Ignorar líneas vacías
+//
+//                    tokens = linea.split(separador); // Se guarda cada elemento en función del separador
+//
+//                    int valor1 = Integer.parseInt(tokens[0]);
+//                    int valor2 = Integer.parseInt(tokens[1]);
+//
+//                    f = new FichaDomino(valor1, valor2);
+//
+//                    if (valor1 > 6 || valor2 > 6) {
+//
+//                    } else {
+//
+//                        listaFicha.add(f);
+//                        listaFicha2.add(f);
+//                        
+//
+//                    }
+//
+//                }
+//            }
+//        } catch (FileNotFoundException e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//        for (int i = 0; i < listaFicha.size(); i++) {
+//        if (listaFicha.get(i).equals(listaFicha2.get(i))) {
+//            
+//            listaFicha.remove(i);
+//            
+//        }
+//    }
+//
+//        return listaFicha;
+//    }
     public static List<FichaDomino> generarListaFichero(String nomFichero, String separador) {
         List<FichaDomino> listaFicha = new ArrayList<>();
-        List<FichaDomino> listaFicha2 = new ArrayList<>();
+        Set<FichaDomino> fichasSet = new HashSet<>();
 
         String idFichero = nomFichero;
         String[] tokens;
         String linea = "";
 
-        FichaDomino f = null;
-
         try ( Scanner datosFichero = new Scanner(new File(idFichero), "UTF-8")) {
             while (datosFichero.hasNextLine()) {
-
-                linea = datosFichero.nextLine(); // Guarda la línea completa en un String
-
+                linea = datosFichero.nextLine();
                 linea = linea.replaceAll(" ", "");
 
-                if (!linea.isEmpty()) { // Ignorar líneas vacías
-
-                    tokens = linea.split(separador); // Se guarda cada elemento en función del separador
+                if (!linea.isEmpty()) {
+                    tokens = linea.split(separador);
 
                     int valor1 = Integer.parseInt(tokens[0]);
                     int valor2 = Integer.parseInt(tokens[1]);
 
-                    f = new FichaDomino(valor1, valor2);
+                    FichaDomino f = new FichaDomino(valor1, valor2);
 
-                    if (valor1 > 6 || valor2 > 6) {
-
-                    } else {
-
-                        listaFicha.add(f);
-                        listaFicha2.add(f);
-                        
-
+                    if (valor1 <= 6 && valor2 <= 6) {
+                        fichasSet.add(f);
+                        fichasSet.add(new FichaDomino(valor2, valor1)); // Agregar ficha con valores invertidos
                     }
-
                 }
             }
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
-        for (int i = 0; i < listaFicha.size(); i++) {
-        if (listaFicha.get(i).equals(listaFicha2.get(i))) {
-            
-            listaFicha.remove(i);
-            
-        }
-    }
-
+        listaFicha.addAll(fichasSet);
         return listaFicha;
     }
-
 }
+
